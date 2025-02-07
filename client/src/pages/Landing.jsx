@@ -3,7 +3,18 @@ import main from '../assets/images/main.svg'
 import logo from '../assets/images/logo.svg'
 import { Link } from "react-router-dom"
 import { Logo } from "../components"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
 const Landing = () => {
+  const navigate = useNavigate()
+
+  const userId = localStorage.getItem("userId")
+
+  useEffect(()=>{
+    if(userId){
+      navigate('/dashboard')
+    }
+  },[navigate,userId])
   return (
     <Wrapper>
       <nav>
