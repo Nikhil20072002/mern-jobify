@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Outlet,useLoaderData,redirect,useNavigate } from 'react-router-dom'
+import { Outlet, useLoaderData, redirect, useNavigate, useNavigation } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Dashboard'
 import SmallSidebar from '../components/SmallSidebar'
 import BigSidebar from '../components/BigSidebar'
@@ -8,14 +8,15 @@ import { createContext } from 'react'
 import { checkDefaultTheme } from '../App'
 import customFetch from '../utils/customFetch'
 import { toast } from 'react-toastify'
+import Loading from '../components/Loading'
 
 
-export const loader = async()=>{
+export const loader = async () => {
   try {
-    const {data} = await customFetch.get('/users/current-user/')
-    localStorage.setItem('userId',data.user?._id)
+    const { data } = await customFetch.get('/users/current-user/')
+    localStorage.setItem('userId', data.user?._id)
     return data
-  } catch (error) {    
+  } catch (error) {
     return redirect('/');
   }
 }
@@ -26,17 +27,24 @@ const DashboardLayout = () => {
 
   const navigate = useNavigate()
 
-  const {user} = useLoaderData()  
+  const navigation = useNavigation()
+
+  const isPageLoading = navigation.state === 'loading'
+
+  console.log(isPageLoading);
+  
+
+  const { user } = useLoaderData()
 
   const [showSidebar, setShowSidebar] = useState(false)
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme())
 
   const toggleDarkTheme = () => {
-  
+
     const newDarkTheme = !isDarkTheme;
     setIsDarkTheme(newDarkTheme)
-    document.body.classList.toggle('dark-theme',newDarkTheme)
-    localStorage.setItem('darkTheme',newDarkTheme);
+    document.body.classList.toggle('dark-theme', newDarkTheme)
+    localStorage.setItem('darkTheme', newDarkTheme);
   }
 
   const toggleSidebar = () => {
@@ -67,9 +75,9 @@ const DashboardLayout = () => {
           <div>
             <Navbar />
             <div className="dashboard-page">
-              <Outlet context={{user}}/>
+              {isPageLoading ? <Loading /> : <Outlet context={{ user }} />}
             </div>
-          </div> 
+          </div>
         </main>
       </Wrapper>
     </DashboardContext.Provider>

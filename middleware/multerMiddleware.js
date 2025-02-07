@@ -8,8 +8,8 @@ const upload = multer({storage});
 const parser = new DataParser()
 
 
-export const formatImage = (file)=>{
-   const fileExtention = path.extname(file.originalName).toString()
+export const formatImage = (file)=>{    
+   const fileExtention = path.extname(file.originalname).toString()
    return parser.format(fileExtention,file.buffer).content;
 }
 
