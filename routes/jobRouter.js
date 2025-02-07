@@ -4,7 +4,7 @@ import {checkForTestUser} from '../middleware/authMiddleware.js'
 const router = Router()
 
 // import {getAllJobs,deleteJob,updateJob,findJob,createJob} from '../controllers/jobController_temp.js'
-import { getAllJobs,deleteJob,updateJob,findJob,createJob, showStats } from "../controllers/JobController.js";
+import { getAllJobs,deleteJob,updateJob,findJob,createJob, showStats } from "../controllers/jobController.js"
 
 router.route('/').get(getAllJobs).post(checkForTestUser,validateJobInput,createJob)
 router.route('/stats').get(showStats)

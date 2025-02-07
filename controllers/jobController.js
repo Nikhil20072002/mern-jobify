@@ -2,7 +2,6 @@ import { nanoid } from "nanoid";
 import Job from "../models/JobModel.js";
 import 'express-async-errors';
 import { StatusCodes } from "http-status-codes";
-import { NotFoundError } from "../errors/customError.js";
 import mongoose from "mongoose";
 import day from 'dayjs'
 import { monthMap } from "../utils/constants.js";
